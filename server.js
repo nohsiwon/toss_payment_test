@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 var express = require('express');
 var got = require('got');
 var { resolve } = require('path');
@@ -10,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // TODO: 개발자센터에 로그인해서 내 결제위젯 연동 키 > 시크릿 키를 입력하세요. 시크릿 키는 외부에 공개되면 안돼요.
 // @docs https://docs.tosspayments.com/reference/using-api/api-keys
-var secretKey = 'test_sk_ex6BJGQOVDOnakZBWKg53W4w2zNb';
+var secretKey = process.env.SECRET_KEY;
 
 app.post('/confirm', function (req, res) {
     var { paymentKey, orderId, amount } = req.body;
@@ -62,4 +64,6 @@ app.get('/fail', function (req, res) {
     res.sendFile(path);
 });
 
-app.listen(4242, () => console.log(`http://localhost:${4242} 으로 샘플 앱이 실행되었습니다.`));
+app.listen(4242, () => {
+    console.log(`http://localhost:${4242}으로 샘플 앱이 실행되었습니다.`);
+});
